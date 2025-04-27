@@ -23,15 +23,15 @@ pipeline {
         sh 'mkdir -p target'
         sh 'mv *.jar target/ || true'
         sh 'ls -l target/'
-        sh 'docker build -t shanem/spring-petclinic:latest .'
+        sh 'docker build -t lassovb/spring-petclinic:latest .'
       }
     }
     stage('Docker Push') {
-    agent any
-  steps {
-    withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
-      sh 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
-      sh 'docker push shanem/spring-petclinic:latest'
+      agent any
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
+          sh 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
+          sh 'docker push lassovb/spring-petclinic:latest'
         }
       }
     }
