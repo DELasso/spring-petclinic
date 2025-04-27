@@ -6,7 +6,7 @@ pipeline {
     stage('Maven Install') {
       agent {
         docker {
-          image 'maven:3.9.6'
+          image 'maven:3.9.6-eclipse-temurin-17'
         }
       }
       steps {
@@ -20,9 +20,8 @@ pipeline {
       steps {
         unstash 'built-jar'
         sh 'ls -l target/'
-        // Asegurarse de que el directorio target/ existe
         sh 'mkdir -p target'
-        sh 'mv *.jar target/ || true' // Mover cualquier JAR al directorio target/ si es necesario
+        sh 'mv *.jar target/ || true'
         sh 'ls -l target/'
         sh 'docker build -t shanem/spring-petclinic:latest .'
       }
