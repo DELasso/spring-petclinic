@@ -27,11 +27,11 @@ pipeline {
       }
     }
     stage('Docker Push') {
-      agent any
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'lassovb', passwordVariable: 'Davidlasso7@')]) {
-          sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS'
-          sh 'docker push shanem/spring-petclinic:latest'
+    agent any
+  steps {
+    withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
+      sh 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
+      sh 'docker push shanem/spring-petclinic:latest'
         }
       }
     }
